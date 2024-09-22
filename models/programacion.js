@@ -1,6 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+const mongoose = require("mongoose");
 
-const horarioSchema = new Schema({
+const horarioSchema = new mongoose.Schema({
     salon: {
         type: String,
         required: true
@@ -22,7 +22,7 @@ const horarioSchema = new Schema({
 
 const programacionSchema = new mongoose.Schema({
     curso: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Curso",
         required: true
     },
@@ -37,4 +37,4 @@ const programacionSchema = new mongoose.Schema({
     horarios: [horarioSchema]
 });
 
-export default mongoose.model('Programacion', programacionSchema);
+module.exports = mongoose.model("Programacion", programacionSchema);

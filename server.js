@@ -15,4 +15,7 @@ app.use(express.json());
 const cursosRouter = require("./routes/curso");
 app.use("/curso", cursosRouter);
 
+const programacionesRouter = require("./routes/programacion");
+app.use("/programacion", programacionesRouter);
+
 app.listen(3000, () => console.log("Server started"));
