@@ -5,11 +5,12 @@ const Curso = require("../models/curso");
 /*
     METHODS:
     ------------
-    GET all courses
-    GET one course by ID
-    POST new course
-    PATCH a course
-    DELETE a course
+    x GET all courses
+    x GET one course by ID
+    x GET one course by CODIGO_CURSO
+    x POST new course
+    x PATCH a course
+    x DELETE a course
 */
 
 // GET all courses
@@ -28,6 +29,21 @@ router.get("/:id", async(req, res) => {
     let curso;
     try {
         curso = await Curso.findById(req.params.id);
+        if (curso == null) {
+            return res.status(404).json({ message: "No se encontró el curso" });
+        }
+    }
+    catch (err) {
+        return res.status(500).json({ message: err.message});
+    }
+    res.json(curso);
+});
+
+// GET one course by CODIGO_CURSO
+router.get("/codigo/:codigo", async(req,res) => {
+    let curso;
+    try {
+        curso = await Curso.findOne({ codigo_curso:req.params.codigo });
         if (curso == null) {
             return res.status(404).json({ message: "No se encontró el curso" });
         }
@@ -107,7 +123,5 @@ async function getCurso(req, res, next) {
     res.curso = curso;
     next();
 }
-
-
 
 module.exports = router

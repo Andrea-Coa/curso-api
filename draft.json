@@ -1,0 +1,32 @@
+[
+    {
+        "COURSE":"",
+        "nombre":"",
+        "codigo":"",
+        "creditos":"",
+        "horas_semana":"",
+        "categoria":"",
+        "descripcion":""
+    },
+    {
+        "COURSE OFFER":"",
+        "nombre_curso":"",
+        "OFERTA DE CURSO":"",
+        "horarios":[],
+        "periodo":"",
+        "seccion":"",
+        "docente":"",
+        "inscripciones":0
+    },
+    {
+        "INSCRIPCION":"",
+        "codigo_alumno":"",
+        "nombre_curso":"",
+        "codigo_curso":"",
+        "periodo":"",
+        "seccion":"",
+        "horarios":[],
+        "nro_vez":1,
+        "o opner los course offers id??":""
+    }
+]

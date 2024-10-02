@@ -1,11 +1,7 @@
 const mongoose = require("mongoose");
 const horarioSchema = require("./horario");
 
-const inscripcionSchema = new mongoose.Schema({
-    correo_alumno: {
-        type: String,
-        required: true
-    },
+const ofertaCursoSchema = new mongoose.Schema({
     codigo_curso: {
         type: String,
         required: true
@@ -14,19 +10,28 @@ const inscripcionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    periodo: {
-        type: String,
+    creditos: {
+        type: Number,
         required: true
     },
     seccion: {
         type: Number,
         required: true
     },
-    nro_vez: {
-        type: Number,
+    periodo: {
+        type: String,
         required: true
+    },
+    total_cupos: {
+        type: Number,
+        required: true,
+        default: 30
+    },
+    nro_inscritos: {
+        type: Number,
+        default: 0
     },
     horarios: [horarioSchema]
 });
 
-module.exports = mongoose.model("Inscripcion", inscripcionSchema);
+module.exports = mongoose.model("OfertaCurso", ofertaCursoSchema);

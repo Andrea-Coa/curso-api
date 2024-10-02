@@ -26,15 +26,6 @@ const cursoSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-    // periodo: {
-    //     type: String,
-    //     required: true
-    // },
-    // seccion: {
-    //     type: Number,
-    //     required: true
-    // },
-    // horarios: [horarioSchema]
 });
 
 module.exports = mongoose.model("Curso", cursoSchema);

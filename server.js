@@ -13,9 +13,12 @@ db.on("open", () => console.log("Connected to MongoDB"));
 app.use(express.json());
 
 const cursosRouter = require("./routes/curso");
-app.use("/curso", cursosRouter);
+app.use("/cursos", cursosRouter);
 
-const programacionesRouter = require("./routes/programacion");
-app.use("/programacion", programacionesRouter);
+const ofertasCursosRouter = require("./routes/ofertaCurso");
+app.use("/ofertas", ofertasCursosRouter);
+
+const inscripcionRouter = require("./routes/inscripcion");
+app.use("/inscripciones", inscripcionRouter);
 
 app.listen(3000, () => console.log("Server started"));
