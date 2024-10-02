@@ -5,11 +5,12 @@ const Curso = require("../models/curso");
 /*
     METHODS:
     ------------
-    GET all courses
-    GET one course by ID
-    POST new course
-    PATCH a course
-    DELETE a course
+    x GET all courses
+    x GET one course by ID
+    x GET one course by CODIGO_CURSO
+    x POST new course
+    x PATCH a course
+    x DELETE a course
 */
 
 // GET all courses
@@ -38,13 +39,30 @@ router.get("/:id", async(req, res) => {
     res.json(curso);
 });
 
+// GET one course by CODIGO_CURSO
+router.get("/codigo/:codigo", async(req,res) => {
+    let curso;
+    try {
+        curso = await Curso.findOne({ codigo_curso:req.params.codigo });
+        if (curso == null) {
+            return res.status(404).json({ message: "No se encontró el curso" });
+        }
+    }
+    catch (err) {
+        return res.status(500).json({ message: err.message});
+    }
+    res.json(curso);
+});
+
 // POST  a new course
 router.post("/", async (req, res) => {
     const curso = new Curso({
+        codigo_curso: req.body.codigo_curso,
         nombre: req.body.nombre,
         creditos: req.body.creditos,
         horas_semana: req.body.horas_semana,
-        categoria: req.body.categoria
+        categoria: req.body.categoria,
+        descripcion: req.body.descripcion
     });
     try {
         const nuevoCurso = await curso.save();
@@ -58,6 +76,8 @@ router.post("/", async (req, res) => {
 // PATCH a course by ID
 router.patch("/:id", getCurso, async(req, res) => {
     const rb = req.body;
+    if (rb.codigo_curso != null)
+        res.curso.codigo_curso = rb.codigo_curso;
     if (rb.nombre != null)
         res.curso.nombre = rb.nombre;
     if (rb.creditos != null)
@@ -66,6 +86,8 @@ router.patch("/:id", getCurso, async(req, res) => {
         res.curso.horas_semana = rb.horas_semana;
     if (rb.categoria != null)
         res.curso.categoria = rb.categoria;
+    if (rb.descripcion != null)
+        res.curso.descripcion = rb.descripcion;
 
     try {
         const cursoActualizado = await res.curso.save();
@@ -101,7 +123,5 @@ async function getCurso(req, res, next) {
     res.curso = curso;
     next();
 }
-
-
 
 module.exports = router

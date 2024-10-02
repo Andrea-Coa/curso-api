@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const cursoSchema = new mongoose.Schema({
+    codigo_curso: {
+        type: String,
+        required: true
+    },
     nombre: {
         type: String,
         required: true
@@ -17,6 +21,10 @@ const cursoSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: "Cursos generales"
+    },
+    descripcion: {
+        type: String,
+        required: true
     }
 });
 
