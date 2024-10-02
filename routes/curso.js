@@ -41,10 +41,12 @@ router.get("/:id", async(req, res) => {
 // POST  a new course
 router.post("/", async (req, res) => {
     const curso = new Curso({
+        codigo_curso: req.body.codigo_curso,
         nombre: req.body.nombre,
         creditos: req.body.creditos,
         horas_semana: req.body.horas_semana,
-        categoria: req.body.categoria
+        categoria: req.body.categoria,
+        descripcion: req.body.descripcion
     });
     try {
         const nuevoCurso = await curso.save();
@@ -58,6 +60,8 @@ router.post("/", async (req, res) => {
 // PATCH a course by ID
 router.patch("/:id", getCurso, async(req, res) => {
     const rb = req.body;
+    if (rb.codigo_curso != null)
+        res.curso.codigo_curso = rb.codigo_curso;
     if (rb.nombre != null)
         res.curso.nombre = rb.nombre;
     if (rb.creditos != null)
@@ -66,6 +70,8 @@ router.patch("/:id", getCurso, async(req, res) => {
         res.curso.horas_semana = rb.horas_semana;
     if (rb.categoria != null)
         res.curso.categoria = rb.categoria;
+    if (rb.descripcion != null)
+        res.curso.descripcion = rb.descripcion;
 
     try {
         const cursoActualizado = await res.curso.save();
