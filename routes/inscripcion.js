@@ -30,13 +30,12 @@ router.get("/:id", getInscripcion, async(req, res) => {
 })
 
 // GET all by CORREO_ALUMNO and periodo (opcional)
-router.get("/alumno/:correo_alumno", async(req, res) => {
+router.get("/alumno/:correo_alumno/:periodo", async(req, res) => {
     let filters =  {
-        correo_alumno: req.params.correo_alumno
+        correo_alumno: req.params.correo_alumno,
+        periodo: req.params.periodo
     };
-    if (req.body.periodo != null) {
-        filters.periodo = req.body.periodo;
-    }
+
     try {
         const inscripciones = await Inscripcion.find(filters);
         if (inscripciones.length === 0) {

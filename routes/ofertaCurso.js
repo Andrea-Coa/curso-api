@@ -6,22 +6,38 @@ const OfertaCurso = require("../models/ofertaCurso");
     METHODS:
     ------------
     x GET all ofertas
-    X GET all ofertas by CODIGO_CURSO or PERIODO or SECCION
+    X GET all ofertas by CODIGO_CURSO and PERIODO and SECCION
     x GET one OFERTA by id
     x POST new oferta
     x PATCH an oferta
     x DELETE an oferta
 */
 
-// GET all ofertas (permite filtros)
+// GET all ofertas (sin filtros)
 router.get("/", async(req, res) => {
-    filter = {};
-    if (req.body.codigo_curso != null)
-        filter.codigo_curso = req.body.codigo_curso;
-    if (req.body.periodo != null)
-        filter.periodo = req.body.periodo;
-    if (req.body.seccion != null)
-        filter.seccion = req.body.seccion;
+    // filter = {};
+    // if (req.body.codigo_curso != null)
+    //     filter.codigo_curso = req.body.codigo_curso;
+    // if (req.body.periodo != null)
+    //     filter.periodo = req.body.periodo;
+    // if (req.body.seccion != null)
+    //     filter.seccion = req.body.seccion;
+    try {
+        const ofertas = await OfertaCurso.find().populate("horarios");
+        res.json(ofertas);
+    }
+    catch (err) {
+        res.status(500).json({message:err.message});
+    }
+});
+
+// GET all ofertas by Codigo curso and periodo and seccion
+router.get("/:codigo_curso/:periodo/:seccion", async(req, res) => {
+    filter = {
+        codigo_curso: req.params.codigo_curso,
+        periodo: req.params.periodo,
+        seccion: req.params.seccion
+    };
     try {
         const ofertas = await OfertaCurso.find(filter).populate("horarios");
         res.json(ofertas);
