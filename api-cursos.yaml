@@ -1,0 +1,668 @@
+openapi: 3.0.0
+info:
+  title: API de cursos de Universidad
+  description: API para gestionar datos de los cursos de una universidad.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000
+    description: Servidores de producción
+
+tags:
+  - name: cursos
+    description: Operaciones con cursos
+  - name: ofertas de cursos
+    description: Operaciones con ofertas de cursos
+  - name: inscripciones
+    description: Operaciones con inscripciones de alumnos en cursos
+
+paths:
+  /cursos:
+    get:
+      tags:
+        - cursos
+      summary: Obtener todos los cursos
+      responses:
+        '200':
+          description: Un arreglo JSON de cursos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    codigo_curso:
+                      type: string
+                    nombre:
+                      type: string
+                    creditos:
+                      type: integer
+                    horas_semana:
+                      type: integer
+                    categoria:
+                      type: string
+                    descripcion:
+                      type: string
+    post:
+      tags:
+        - cursos
+      summary: Crear un nuevo curso
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                codigo_curso:
+                  type: string
+                nombre:
+                  type: string
+                creditos:
+                  type: integer
+                horas_semana:
+                  type: integer
+                categoria:
+                  type: string
+                descripcion:
+                  type: string
+      responses:
+        '201':
+          description: Curso creado exitosamente
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  codigo_curso:
+                    type: string
+                  nombre:
+                    type: string
+                  creditos:
+                    type: integer
+                  horas_semana:
+                    type: integer
+                  categoria:
+                    type: string
+                  descripcion:
+                    type: string
+  /cursos/{id}:
+    paramenters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - cursos
+      summary: Obtener un curso por ID
+      responses:
+        '200':
+          description: Un objeto de curso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    codigo_curso:
+                      type: string
+                    nombre:
+                      type: string
+                    creditos:
+                      type: integer
+                    horas_semana:
+                      type: integer
+                    categoria:
+                      type: string
+                    descripcion:
+                      type: string
+        '404':
+          description: Curso no encontrado
+    patch:
+      tags:
+        - cursos
+      summary: Actualizar curso por ID
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: string
+                codigo_curso:
+                  type: string
+                nombre:
+                  type: string
+                creditos:
+                  type: integer
+                horas_semana:
+                  type: integer
+                categoria:
+                  type: string
+                descripcion:
+                  type: string
+      responses:
+        '200':
+          description: Estudiante actualizado exitosamente
+        '404':
+          description: Estudiante no encontrado
+    delete:
+      tags:
+        - cursos
+      summary: Eliminar un curso por ID
+      responses:
+        '200':
+          description: Curso eliminado exitosamente
+        '400':
+          description: Curso no encontrado
+  /cursos/codigo/{codigo}:
+    get:
+      tags:
+        - cursos
+      summary: Obtener curso por codigo
+      responses:
+        '200':
+          description: Un objeto de curso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  codigo_curso:
+                    type: string
+                  nombre:
+                    type: string
+                  creditos:
+                    type: integer
+                  horas_semana:
+                    type: integer
+                  categoria:
+                    type: string
+                  descripcion:
+                    type: string
+        '404':
+          description: Curso no encontrado
+  /ofertas:
+    get:
+      tags:
+        - ofertas de cursos
+      summary: Obtener todas las ofertas de cursos
+      responses:
+        '200':
+          description: Arreglo JSON de ofertas de cursos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    codigo_curso:
+                      type: string
+                    nombre_curso:
+                      type: string
+                    creditos:
+                      type: integer
+                    seccion:
+                      type: integer
+                    periodo:
+                      type: string
+                    total_cupos:
+                      type: integer
+                    nro_inscritos:
+                      type: integer
+                    horarios:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                          salon:
+                            type: string
+                          dia:
+                            type: integer
+                          hora_inicio:
+                            type: integer
+                          hora_fin:
+                            type: integer
+    post:
+      tags:
+        - ofertas de cursos
+      summary: Crear una nueva oferta de curso
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                codigo_curso:
+                  type: string
+                nombre_curso:
+                  type: string
+                creditos:
+                  type: integer
+                seccion:
+                  type: integer
+                periodo:
+                  type: string
+                total_cupos:
+                  type: integer
+                nro_inscritos:
+                  type: integer
+                horarios:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      salon:
+                        type: string
+                      dia:
+                        type: integer
+                      hora_inicio:
+                        type: integer
+                      hora_fin:
+                        type: integer
+      responses:
+        '201':
+          description: Oferta de curso creada exitosamente
+  /ofertas/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - ofertas de cursos
+      summary: Obtener una oferta de curso por ID
+      responses:
+      '200':
+        description: Un objeto de oferta de curso
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: string
+                codigo_curso:
+                  type: string
+                nombre_curso:
+                  type: string
+                creditos:
+                  type: integer
+                seccion:
+                  type: integer
+                periodo:
+                  type: string
+                total_cupos:
+                  type: integer
+                nro_inscritos:
+                  type: integer
+                horarios:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      salon:
+                        type: string
+                      dia:
+                        type: integer
+                      hora_inicio:
+                        type: integer
+                      hora_fin:
+                        type: integer
+      '404':
+        description: Oferta de curso no encontrada
+    patch:
+      tags:
+        - ofertas de cursos
+      summary: Actualizar oferta de curso por ID
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: string
+                codigo_curso:
+                  type: string
+                nombre_curso:
+                  type: string
+                creditos:
+                  type: integer
+                seccion:
+                  type: integer
+                periodo:
+                  type: string
+                total_cupos:
+                  type: integer
+                nro_inscritos:
+                  type: integer
+                horarios:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      salon:
+                        type: string
+                      dia:
+                        type: integer
+                      hora_inicio:
+                        type: integer
+                      hora_fin:
+                        type: integer
+      responses:
+        '200': 
+          description: Oferta de curso actualizado exitosamente
+        '400': 
+          description: Error al enviar los datos 
+    delete:
+      tags:
+        - ofertas de cursos
+      summary: Eliminar una oferta de curso por ID
+      responses:
+        '200':
+          description: Oferta de curso eliminada exitosamente
+        '500':
+          description: Error en el servidor
+  /ofertas/{codigo_curso}/{periodo}/{seccion}:
+    get:
+      tags:
+        - ofertas de cursos
+      summary: Obtener una oferta según un código de curso, un periodo académico y una sección
+      responses:
+        '200':
+          description: Un arreglo de ofertas de cursos, posiblemente de un solo elemento
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    codigo_curso:
+                      type: string
+                    nombre_curso:
+                      type: string
+                    creditos:
+                      type: integer
+                    seccion:
+                      type: integer
+                    periodo:
+                      type: string
+                    total_cupos:
+                      type: integer
+                    nro_inscritos:
+                      type: integer
+                    horarios:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                          salon:
+                            type: string
+                          dia:
+                            type: integer
+                          hora_inicio:
+                            type: integer
+                          hora_fin:
+                            type: integer
+  /inscripciones:
+    get:
+      tags:
+        - inscripciones
+      summary: Obtener todas las inscripciones de alumnos en cursos
+      responses:
+        '200':
+          description: Arreglo JSON de inscripciones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    correo_alumno:
+                      type: string
+                    codigo_curso:
+                      type: string
+                    nombre_curso:
+                      type: string
+                    periodo:
+                      type: string
+                    seccion:
+                      type: integer
+                    nro_vez:
+                      type: integer
+                    horarios:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                          salon:
+                            type: string
+                          dia:
+                            type: integer
+                          hora_inicio:
+                            type: integer
+                          hora_fin:
+                            type: integer
+    post:
+      tags:
+        - inscripciones
+      summary: Crear una nueva inscripción de un alumno en un curso
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                correo_alumno:
+                  type: string
+                codigo_curso:
+                  type: string
+                nombre_curso:
+                  type: string
+                periodo:
+                  type: string
+                seccion:
+                  type: integer
+                nro_vez:
+                  type: integer
+                horarios:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      salon:
+                        type: string
+                      dia:
+                        type: integer
+                      hora_inicio:
+                        type: integer
+                      hora_fin:
+                        type: integer
+      responses:
+        '200':
+          description: Estudiante inscrito exitosamente
+  /inscripciones/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - inscripciones
+      summary: Obtener una inscripción por ID
+      responses:
+        '200':
+          description: Un objeto de inscripción
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  correo_alumno:
+                    type: string
+                  codigo_curso:
+                    type: string
+                  nombre_curso:
+                    type: string
+                  periodo:
+                    type: string
+                  seccion:
+                    type: integer
+                  nro_vez:
+                    type: integer
+                  horarios:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        salon:
+                          type: string
+                        dia:
+                          type: integer
+                        hora_inicio:
+                          type: integer
+                        hora_fin:
+                          type: integer
+        '404':
+          description: Inscripción no encontrada
+    patch:
+      tags:
+        - inscripciones
+      summary: Actualizar inscripción por ID
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                correo_alumno:
+                  type: string
+                codigo_curso:
+                  type: string
+                nombre_curso:
+                  type: string
+                periodo:
+                  type: string
+                seccion:
+                  type: integer
+                nro_vez:
+                  type: integer
+                horarios:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      salon:
+                        type: string
+                      dia:
+                        type: integer
+                      hora_inicio:
+                        type: integer
+                      hora_fin:
+                        type: integer
+      responses:
+        '200':
+          description: Inscripción actualizada exitosamente
+        '404':
+          description: Inscripción no encontrada
+    delete:
+      tags:
+        - inscripciones
+      summary: Eliminar una inscripción por ID
+      responses:
+        '200':
+          description: Inscripción eliminada exitosamente
+        '404':
+          description: Inscripción no encontrada
+  /inscripciones/{correo_alumno}/{periodo}:
+    get:
+      tags:
+        - inscripciones
+      summary: Obtener inscripciones de un alumno en un periodo académico
+      responses:
+        '200':
+          description: Arreglo JSON de inscripciones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    correo_alumno:
+                      type: string
+                    codigo_curso:
+                      type: string
+                    nombre_curso:
+                      type: string
+                    periodo:
+                      type: string
+                    seccion:
+                      type: integer
+                    nro_vez:
+                      type: integer
+                    horarios:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                          salon:
+                            type: string
+                          dia:
+                            type: integer
+                          hora_inicio:
+                            type: integer
+                          hora_fin:
+                            type: integer
