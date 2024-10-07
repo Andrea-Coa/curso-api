@@ -1,4 +1,4 @@
-require('dotenv').config()
+// require('dotenv').config()
 const express = require("express")
 const mongoose = require("mongoose");
 
@@ -11,6 +11,10 @@ db.on("error", (error) => console.error(error));
 db.on("open", () => console.log("Connected to MongoDB"));
 
 app.use(express.json());
+
+app.get('/', (req, res) => {
+    res.status(200).send('Service is healthy');
+});
 
 const cursosRouter = require("./routes/curso");
 app.use("/cursos", cursosRouter);
